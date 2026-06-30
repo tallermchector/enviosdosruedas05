@@ -24,7 +24,10 @@ import {
   Award,
   Compass,
   FileText,
-  Activity
+  Activity,
+  Scale,
+  Plus,
+  Minus
 } from 'lucide-react';
 
 // MAR DEL PLATA ZONES FOR CALCULATOR
@@ -49,6 +52,9 @@ export default function Page() {
   // Calculator State
   const [origin, setOrigin] = useState<string>('centro');
   const [destination, setDestination] = useState<string>('puerto');
+  const [originAddress, setOriginAddress] = useState<string>('');
+  const [destinationAddress, setDestinationAddress] = useState<string>('');
+  const [packageWeight, setPackageWeight] = useState<number>(2); // Default 2 kg
   const [vehicle, setVehicle] = useState<'moto' | 'furgon'>('moto');
   const [serviceType, setServiceType] = useState<'express' | 'lowcost' | 'flex'>('express');
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -71,6 +77,18 @@ export default function Page() {
     // Vehicle multiplier
     const vehicleMult = vehicle === 'furgon' ? 1.8 : 1.0;
     
+    // Weight multiplier based on pre-defined ranges
+    let weightMult = 1.0;
+    if (packageWeight > 25) {
+      weightMult = 1.8;
+    } else if (packageWeight > 10) {
+      weightMult = 1.5;
+    } else if (packageWeight > 5) {
+      weightMult = 1.3;
+    } else if (packageWeight > 2) {
+      weightMult = 1.15;
+    }
+
     // Service multiplier / additions
     let serviceBonus = 0;
     let serviceMult = 1.0;
@@ -83,7 +101,7 @@ export default function Page() {
       serviceBonus = 400; // standard MercadoLibre Flex integration
     }
 
-    calculatedPrice = Math.round((base * vehicleMult * serviceMult) + serviceBonus);
+    calculatedPrice = Math.round((base * vehicleMult * serviceMult * weightMult) + serviceBonus);
 
     // Estimate delivery times
     if (serviceType === 'express') {
@@ -104,8 +122,9 @@ export default function Page() {
       serviceType === 'lowcost' ? 'LowCost Próximo Día' : 'MercadoLibre Flex';
 
     const text = `¡Hola Envíos DosRuedas! 👋 Coticé mi envío por la web y quiero confirmarlo:\n\n` +
-      `📍 *Origen:* ${originName}\n` +
-      `🏁 *Destino:* ${destName}\n` +
+      `📍 *Origen:* ${originAddress ? `${originAddress}, ` : ''}${originName}, Mar del Plata\n` +
+      `🏁 *Destino:* ${destinationAddress ? `${destinationAddress}, ` : ''}${destName}, Mar del Plata\n` +
+      `⚖️ *Peso del Paquete:* ~${packageWeight} kg\n` +
       `📦 *Servicio:* ${typeLabel}\n` +
       `🚐 *Vehículo:* ${vehicleName}\n` +
       `💵 *Precio Estimado:* $${calculatedPrice}\n` +
@@ -256,7 +275,7 @@ export default function Page() {
       </header>
 
       {/* 2. HERO SECTION (Blue Background Design with Background Image Overlay) */}
-      <section id="hero" className="relative py-16 md:py-28 bg-egyptian-blue text-white overflow-hidden border-b-4 border-sunbeam-yellow">
+      <section id="hero" className="relative py-16 md:py-28 bg-blue-100 text-egyptian-blue overflow-hidden border-b-4 border-sunbeam-yellow border-y border-blue-200/60">
         
         {/* Absolute Background image with low opacity for clear readability */}
         <div className="absolute inset-0 z-0 pointer-events-none opacity-20">
@@ -283,14 +302,14 @@ export default function Page() {
                 Tu Solución Confiable
               </div>
 
-              <h1 className="font-anton text-5xl md:text-7xl lg:text-8xl text-white uppercase leading-none tracking-tight">
+              <h1 className="font-anton text-5xl md:text-7xl lg:text-8xl text-egyptian-blue uppercase leading-none tracking-tight">
                 Conectá tu negocio <br />
                 <span className="bg-sunbeam-yellow text-egyptian-blue px-3 inline-block transform rotate-1 border-4 border-white shadow-brutal-dark">
                   con toda la ciudad
                 </span>
               </h1>
 
-              <p className="text-xl text-gray-100 font-inter max-w-2xl leading-relaxed">
+              <p className="text-xl text-gray-800 font-inter max-w-2xl leading-relaxed">
                 Logística humana y eficiente para Mar del Plata. Poné tus ventas en las mejores manos: conectamos tu negocio con entregas rápidas y seguras. Clientes felices siempre.
               </p>
 
@@ -313,14 +332,14 @@ export default function Page() {
 
               {/* Pillars Floating Badges */}
               <div className="grid grid-cols-3 gap-4 pt-6 max-w-xl">
-                <div className="bg-white/10 backdrop-blur-md border border-white/20 p-3 text-center">
-                  <span className="font-bebas text-sm text-sunbeam-yellow block tracking-widest">100% SEGURO</span>
+                <div className="bg-white border-2 border-egyptian-blue p-3 text-center shadow-brutal">
+                  <span className="font-bebas text-sm text-egyptian-blue block tracking-widest">100% SEGURO</span>
                 </div>
-                <div className="bg-white/10 backdrop-blur-md border border-white/20 p-3 text-center">
-                  <span className="font-bebas text-sm text-sunbeam-yellow block tracking-widest">ULTRA RÁPIDO</span>
+                <div className="bg-white border-2 border-egyptian-blue p-3 text-center shadow-brutal">
+                  <span className="font-bebas text-sm text-egyptian-blue block tracking-widest">ULTRA RÁPIDO</span>
                 </div>
-                <div className="bg-white/10 backdrop-blur-md border border-white/20 p-3 text-center">
-                  <span className="font-bebas text-sm text-sunbeam-yellow block tracking-widest">COBERTURA TOTAL</span>
+                <div className="bg-white border-2 border-egyptian-blue p-3 text-center shadow-brutal">
+                  <span className="font-bebas text-sm text-egyptian-blue block tracking-widest">COBERTURA TOTAL</span>
                 </div>
               </div>
 
@@ -372,7 +391,7 @@ export default function Page() {
               {/* Explore action anchor */}
               <a 
                 href="#nosotros" 
-                className="mt-6 font-bebas text-lg text-sunbeam-yellow hover:text-white transition-colors flex items-center gap-2 animate-bounce uppercase tracking-widest"
+                className="mt-6 font-bebas text-lg text-egyptian-blue hover:text-egyptian-blue/80 transition-colors flex items-center gap-2 animate-bounce uppercase tracking-widest"
               >
                 Explore <ArrowRight className="w-4 h-4 rotate-90" />
               </a>
@@ -384,7 +403,7 @@ export default function Page() {
       </section>
 
       {/* 3. SECTION 1: Partner Logístico Especializado (Alternate Background - White) */}
-      <section id="nosotros" className="py-20 bg-white text-gray-900 border-b-4 border-egyptian-blue relative">
+      <section id="nosotros" className="py-20 bg-white text-gray-900 border-b-4 border-egyptian-blue relative z-10 shadow-[0_10px_30px_-10px_rgba(0,0,0,0.05)]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
@@ -484,7 +503,7 @@ export default function Page() {
       </section>
 
       {/* 4. SECTION 2: ¡Empezá Ahora! (Alternate Background - Blue) */}
-      <section className="relative py-20 bg-egyptian-blue text-white border-b-4 border-sunbeam-yellow overflow-hidden">
+      <section className="relative py-20 bg-blue-100 text-egyptian-blue border-b-4 border-sunbeam-yellow border-y border-blue-200/60 overflow-hidden">
         
         {/* Background Image with Overlay */}
         <div className="absolute inset-0 z-0 pointer-events-none opacity-15">
@@ -503,12 +522,12 @@ export default function Page() {
             <span className="font-bebas text-lg bg-sunbeam-yellow text-egyptian-blue border border-egyptian-blue px-4 py-1.5 tracking-wider uppercase inline-block transform -rotate-1 shadow-brutal-dark">
               ¡Empezá Ahora!
             </span>
-            <h2 className="font-anton text-4xl md:text-6xl text-white uppercase leading-none tracking-tight">
+            <h2 className="font-anton text-4xl md:text-6xl text-egyptian-blue uppercase leading-none tracking-tight">
               ¿Listo para escalar la <br className="hidden md:inline" />
               logística de tu E-Commerce?
             </h2>
-            <p className="text-lg text-gray-200 max-w-2xl mx-auto font-inter">
-              Olvidate de la gestión de paquetes y enfocate en vender más. Dejá la distribución urbana en manos de expertos.
+            <p className="text-lg text-gray-800 max-w-2xl mx-auto font-inter">
+              Olvidate de la gestión de paquetes and enfocate en vender más. Dejá la distribución urbana en manos de expertos.
             </p>
           </div>
 
@@ -531,15 +550,15 @@ export default function Page() {
             </a>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 max-w-4xl mx-auto pt-8 border-t border-white/20">
-            <div className="p-4 bg-white/5 backdrop-blur-md border border-white/10 rounded-none">
-              <span className="font-bebas text-lg tracking-widest text-sunbeam-yellow block uppercase">Confianza local comprobada</span>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 max-w-4xl mx-auto pt-8 border-t border-egyptian-blue/20">
+            <div className="p-4 bg-white border-2 border-egyptian-blue shadow-brutal rounded-none">
+              <span className="font-bebas text-lg tracking-widest text-egyptian-blue block uppercase">Confianza local comprobada</span>
             </div>
-            <div className="p-4 bg-white/5 backdrop-blur-md border border-white/10 rounded-none">
-              <span className="font-bebas text-lg tracking-widest text-sunbeam-yellow block uppercase">Innovación constante en última milla</span>
+            <div className="p-4 bg-white border-2 border-egyptian-blue shadow-brutal rounded-none">
+              <span className="font-bebas text-lg tracking-widest text-egyptian-blue block uppercase">Innovación constante en última milla</span>
             </div>
-            <div className="p-4 bg-white/5 backdrop-blur-md border border-white/10 rounded-none">
-              <span className="font-bebas text-lg tracking-widest text-sunbeam-yellow block uppercase">Motocicletas dedicadas para máxima agilidad</span>
+            <div className="p-4 bg-white border-2 border-egyptian-blue shadow-brutal rounded-none">
+              <span className="font-bebas text-lg tracking-widest text-egyptian-blue block uppercase">Motocicletas dedicadas para máxima agilidad</span>
             </div>
           </div>
 
@@ -547,7 +566,7 @@ export default function Page() {
       </section>
 
       {/* 5. SECTION 3: Soluciones Corporativas y PyME (Alternate Background - White) */}
-      <section id="vision" className="py-20 bg-white text-gray-900 border-b-4 border-egyptian-blue">
+      <section id="vision" className="py-20 bg-white text-gray-900 border-b-4 border-egyptian-blue relative z-10 shadow-[0_10px_30px_-10px_rgba(0,0,0,0.05)]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           
           {/* Section Header */}
@@ -716,7 +735,7 @@ export default function Page() {
       </section>
 
       {/* 6. SECTION 4: Nuestros Servicios & Cotizador Interactivo (Alternate Background - Blue) */}
-      <section id="servicios" className="py-20 bg-egyptian-blue text-white border-b-4 border-sunbeam-yellow relative">
+      <section id="servicios" className="py-20 bg-blue-100 text-egyptian-blue border-b-4 border-sunbeam-yellow border-y border-blue-200/60 relative">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
@@ -731,13 +750,13 @@ export default function Page() {
                 <span className="font-bebas text-sm bg-white text-egyptian-blue px-3.5 py-1.5 ml-2 tracking-wider uppercase inline-block">
                   Nuestros Servicios
                 </span>
-                <h2 className="font-anton text-4xl md:text-6xl text-white uppercase leading-none tracking-wide">
+                <h2 className="font-anton text-4xl md:text-6xl text-egyptian-blue uppercase leading-none tracking-wide">
                   SOLUCIONES A MEDIDA
                 </h2>
-                <h3 className="font-bebas text-2xl text-sunbeam-yellow tracking-widest uppercase">
+                <h3 className="font-bebas text-2xl text-egyptian-blue/95 tracking-widest uppercase">
                   Elegí tu plan de entregas
                 </h3>
-                <p className="text-gray-200 font-inter text-md max-w-2xl">
+                <p className="text-gray-700 font-inter text-md max-w-2xl">
                   Hemos redefinido los estándares de la logística urbana para ofrecerte una ventaja competitiva real en un mercado en constante evolución. Inteligencia aplicada a cada kilómetro para negocios que no se detienen.
                 </p>
               </div>
@@ -853,8 +872,8 @@ export default function Page() {
 
               {/* Banner indicators footer in section */}
               <div className="space-y-2 pt-4">
-                <div className="h-1 bg-sunbeam-yellow w-36"></div>
-                <div className="flex gap-4 font-bebas text-sm text-sunbeam-yellow tracking-widest uppercase flex-wrap">
+                <div className="h-1 bg-egyptian-blue w-36"></div>
+                <div className="flex gap-4 font-bebas text-sm text-egyptian-blue tracking-widest uppercase flex-wrap">
                   <span>MÁXIMO PODER</span>
                   <span>&bull;</span>
                   <span>INFRAESTRUCTURA TOTAL</span>
@@ -869,57 +888,144 @@ export default function Page() {
             <div id="cotizador" className="lg:col-span-5 bg-white border-4 border-egyptian-blue p-6 text-gray-900 shadow-brutal-yellow">
               
               <div className="border-b-2 border-dashed border-gray-200 pb-4 mb-5">
-                <span className="font-bebas text-xs text-egyptian-blue tracking-widest block uppercase mb-1">CÁLCULO DINÁMICO</span>
-                <h2 className="font-anton text-2xl text-egyptian-blue tracking-wider flex items-center gap-2">
-                  <Map className="w-6 h-6" /> COTIZÁ TU ENVÍO EN MDP
+                <div className="flex items-center justify-between">
+                  <span className="font-bebas text-xs text-egyptian-blue tracking-widest block uppercase">CÁLCULO DINÁMICO & PERSISTENTE</span>
+                  <span className="bg-sunbeam-yellow text-egyptian-blue font-mono text-[9px] font-bold px-2 py-0.5 border border-egyptian-blue uppercase">Soft UI inside</span>
+                </div>
+                <h2 className="font-anton text-2xl text-egyptian-blue tracking-wider flex items-center gap-2 mt-1">
+                  <Map className="w-6 h-6 text-egyptian-blue" /> COTIZÁ TU ENVÍO EN MDP
                 </h2>
                 <p className="text-xs text-gray-500 mt-1 font-inter">
-                  Elegí las zonas y obtené el valor aproximado al instante.
+                  Elegí las zonas, ingresá las direcciones y peso del bulto para cotizar al instante.
                 </p>
               </div>
 
               {/* Calculator Inputs */}
               <div className="space-y-4">
                 
-                {/* Origin */}
-                <div>
-                  <label className="block text-xs font-bebas tracking-wider text-gray-600 uppercase mb-1 flex items-center gap-1">
-                    <MapPin className="w-3.5 h-3.5 text-egyptian-blue" /> Punto de Retiro (Origen)
+                {/* Origin Address & Zone */}
+                <div className="space-y-2">
+                  <label className="block text-xs font-bebas tracking-wider text-gray-600 uppercase flex items-center gap-1">
+                    <MapPin className="w-3.5 h-3.5 text-egyptian-blue" /> Punto de Retiro (Origen en Mar del Plata)
                   </label>
+                  
+                  {/* Soft UI Address text input */}
+                  <div className="relative">
+                    <input 
+                      type="text" 
+                      placeholder="Calle y altura del retiro. Ej: Av. Luro 3200" 
+                      value={originAddress}
+                      onChange={(e) => setOriginAddress(e.target.value)}
+                      className="w-full bg-slate-50 border border-slate-200 hover:border-slate-300 rounded-xl px-4 py-2.5 text-sm text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-4 focus:ring-egyptian-blue/10 focus:border-egyptian-blue transition-all shadow-[inset_1px_1.5px_3px_rgba(0,0,0,0.06)]"
+                    />
+                  </div>
+
+                  {/* Soft UI Zone select */}
                   <div className="relative">
                     <select 
                       value={origin}
                       onChange={(e) => setOrigin(e.target.value)}
-                      className="w-full bg-gray-50 border-2 border-egyptian-blue p-3 font-inter text-sm rounded-none focus:outline-none appearance-none cursor-pointer"
+                      className="w-full bg-slate-50 border border-slate-200 hover:border-slate-300 rounded-xl px-4 py-2.5 pr-10 font-inter text-sm text-gray-700 focus:outline-none focus:ring-4 focus:ring-egyptian-blue/10 focus:border-egyptian-blue transition-all shadow-[inset_1px_1.5px_3px_rgba(0,0,0,0.06)] appearance-none cursor-pointer"
                     >
                       {MDP_ZONES.map(zone => (
-                        <option key={zone.id} value={zone.id}>{zone.name}</option>
+                        <option key={zone.id} value={zone.id}>Zona: {zone.name}</option>
                       ))}
                     </select>
-                    <ChevronDown className="absolute right-3 top-3.5 w-4 h-4 text-egyptian-blue pointer-events-none" />
+                    <ChevronDown className="absolute right-3.5 top-3 w-4.5 h-4.5 text-slate-400 pointer-events-none" />
                   </div>
                 </div>
 
-                {/* Destination */}
-                <div>
-                  <label className="block text-xs font-bebas tracking-wider text-gray-600 uppercase mb-1 flex items-center gap-1">
-                    <MapPin className="w-3.5 h-3.5 text-red-600" /> Punto de Entrega (Destino)
+                {/* Destination Address & Zone */}
+                <div className="space-y-2">
+                  <label className="block text-xs font-bebas tracking-wider text-gray-600 uppercase flex items-center gap-1">
+                    <MapPin className="w-3.5 h-3.5 text-red-600" /> Punto de Entrega (Destino en Mar del Plata)
                   </label>
+
+                  {/* Soft UI Address text input */}
+                  <div className="relative">
+                    <input 
+                      type="text" 
+                      placeholder="Calle y altura de la entrega. Ej: Güemes 2600" 
+                      value={destinationAddress}
+                      onChange={(e) => setDestinationAddress(e.target.value)}
+                      className="w-full bg-slate-50 border border-slate-200 hover:border-slate-300 rounded-xl px-4 py-2.5 text-sm text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-4 focus:ring-egyptian-blue/10 focus:border-egyptian-blue transition-all shadow-[inset_1px_1.5px_3px_rgba(0,0,0,0.06)]"
+                    />
+                  </div>
+
+                  {/* Soft UI Zone select */}
                   <div className="relative">
                     <select 
                       value={destination}
                       onChange={(e) => setDestination(e.target.value)}
-                      className="w-full bg-gray-50 border-2 border-egyptian-blue p-3 font-inter text-sm rounded-none focus:outline-none appearance-none cursor-pointer"
+                      className="w-full bg-slate-50 border border-slate-200 hover:border-slate-300 rounded-xl px-4 py-2.5 pr-10 font-inter text-sm text-gray-700 focus:outline-none focus:ring-4 focus:ring-egyptian-blue/10 focus:border-egyptian-blue transition-all shadow-[inset_1px_1.5px_3px_rgba(0,0,0,0.06)] appearance-none cursor-pointer"
                     >
                       {MDP_ZONES.map(zone => (
-                        <option key={zone.id} value={zone.id}>{zone.name}</option>
+                        <option key={zone.id} value={zone.id}>Zona: {zone.name}</option>
                       ))}
                     </select>
-                    <ChevronDown className="absolute right-3 top-3.5 w-4 h-4 text-egyptian-blue pointer-events-none" />
+                    <ChevronDown className="absolute right-3.5 top-3 w-4.5 h-4.5 text-slate-400 pointer-events-none" />
                   </div>
                 </div>
 
-                {/* Vehicle */}
+                {/* Package Weight (Soft UI control) */}
+                <div className="space-y-2">
+                  <div className="flex justify-between items-center">
+                    <label className="text-xs font-bebas tracking-wider text-gray-600 uppercase flex items-center gap-1.5">
+                      <Scale className="w-3.5 h-3.5 text-egyptian-blue" /> Peso aproximado del paquete
+                    </label>
+                    <span className="bg-egyptian-blue text-white font-mono text-xs font-bold px-2.5 py-0.5 rounded-full shadow-sm">
+                      {packageWeight} kg
+                    </span>
+                  </div>
+
+                  <div className="bg-slate-50 rounded-xl p-3 border border-slate-200/80 shadow-[inset_1px_1.5px_3px_rgba(0,0,0,0.04)] space-y-3">
+                    <div className="flex items-center gap-3">
+                      {/* Decrement Button */}
+                      <button 
+                        type="button"
+                        onClick={() => setPackageWeight(prev => Math.max(1, prev - 1))}
+                        className="w-8 h-8 rounded-full bg-white border border-slate-200 shadow-sm flex items-center justify-center text-gray-600 hover:text-egyptian-blue hover:bg-slate-50 hover:scale-105 active:scale-95 transition-all cursor-pointer"
+                        aria-label="Disminuir peso"
+                      >
+                        <Minus className="w-4 h-4" />
+                      </button>
+
+                      {/* Slider Input with soft custom track styling */}
+                      <input 
+                        type="range"
+                        min="1"
+                        max="40"
+                        step="1"
+                        value={packageWeight}
+                        onChange={(e) => setPackageWeight(Number(e.target.value))}
+                        className="flex-1 h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-egyptian-blue"
+                      />
+
+                      {/* Increment Button */}
+                      <button 
+                        type="button"
+                        onClick={() => setPackageWeight(prev => Math.min(40, prev + 1))}
+                        className="w-8 h-8 rounded-full bg-white border border-slate-200 shadow-sm flex items-center justify-center text-gray-600 hover:text-egyptian-blue hover:bg-slate-50 hover:scale-105 active:scale-95 transition-all cursor-pointer"
+                        aria-label="Aumentar peso"
+                      >
+                        <Plus className="w-4 h-4" />
+                      </button>
+                    </div>
+
+                    {/* Weight class badges and notes */}
+                    <div className="text-center">
+                      <span className="text-[11px] font-medium font-inter text-gray-600 inline-block bg-white border border-slate-100 px-3 py-1 rounded-full shadow-sm">
+                        {packageWeight <= 2 && "✉️ Ligero (Documentos, sobres, paquetes chicos)"}
+                        {packageWeight > 2 && packageWeight <= 5 && "📦 Mediano (Calzado, ropa, cajas chicas)"}
+                        {packageWeight > 5 && packageWeight <= 10 && "💼 Pesado (Cajas medianas, repuestos)"}
+                        {packageWeight > 10 && packageWeight <= 25 && "🏋️ Muy Pesado (Cajas grandes, mercadería)"}
+                        {packageWeight > 25 && "🚚 Carga Especial (Requiere furgón de carga obligatoriamente)"}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Vehicle Selection */}
                 <div>
                   <label className="block text-xs font-bebas tracking-wider text-gray-600 uppercase mb-1">
                     Vehículo Requerido
@@ -953,71 +1059,77 @@ export default function Page() {
                 {/* Service type Selection */}
                 <div>
                   <label className="block text-xs font-bebas tracking-wider text-gray-600 uppercase mb-1">
-                    Prioridad de Despacho
+                    Tipo de Servicio / Prioridad
                   </label>
                   <div className="grid grid-cols-3 gap-2">
                     <button 
                       type="button"
                       onClick={() => setServiceType('express')}
-                      className={`py-2 px-1 border-2 text-center flex flex-col items-center justify-center font-bebas text-xs tracking-wider transition-all cursor-pointer ${
+                      className={`py-2.5 px-1 border-2 text-center flex flex-col items-center justify-center font-bebas text-xs tracking-wider transition-all cursor-pointer ${
                         serviceType === 'express' 
                           ? 'bg-sunbeam-yellow text-egyptian-blue border-egyptian-blue font-bold shadow-brutal' 
                           : 'bg-white text-gray-700 border-gray-300 hover:border-egyptian-blue'
                       }`}
                     >
-                      <Zap className="w-3.5 h-3.5 mb-1" /> EXPRESS
+                      <Zap className="w-3.5 h-3.5 mb-1 text-yellow-600 fill-yellow-400" /> EXPRESS
                     </button>
                     <button 
                       type="button"
                       onClick={() => setServiceType('lowcost')}
-                      className={`py-2 px-1 border-2 text-center flex flex-col items-center justify-center font-bebas text-xs tracking-wider transition-all cursor-pointer ${
+                      className={`py-2.5 px-1 border-2 text-center flex flex-col items-center justify-center font-bebas text-xs tracking-wider transition-all cursor-pointer ${
                         serviceType === 'lowcost' 
                           ? 'bg-sunbeam-yellow text-egyptian-blue border-egyptian-blue font-bold shadow-brutal' 
                           : 'bg-white text-gray-700 border-gray-300 hover:border-egyptian-blue'
                       }`}
                     >
-                      <Clock className="w-3.5 h-3.5 mb-1" /> LOWCOST
+                      <Clock className="w-3.5 h-3.5 mb-1 text-blue-600" /> LOWCOST
                     </button>
                     <button 
                       type="button"
                       onClick={() => setServiceType('flex')}
-                      className={`py-2 px-1 border-2 text-center flex flex-col items-center justify-center font-bebas text-xs tracking-wider transition-all cursor-pointer ${
+                      className={`py-2.5 px-1 border-2 text-center flex flex-col items-center justify-center font-bebas text-xs tracking-wider transition-all cursor-pointer ${
                         serviceType === 'flex' 
                           ? 'bg-sunbeam-yellow text-egyptian-blue border-egyptian-blue font-bold shadow-brutal' 
                           : 'bg-white text-gray-700 border-gray-300 hover:border-egyptian-blue'
                       }`}
                     >
-                      <Package className="w-3.5 h-3.5 mb-1" /> FLEX MELI
+                      <Package className="w-3.5 h-3.5 mb-1 text-green-600" /> FLEX MELI
                     </button>
                   </div>
                 </div>
 
               </div>
 
-              {/* Calculation output summary box */}
-              <div className="bg-egyptian-blue text-white p-4 mt-6 border-2 border-egyptian-blue shadow-brutal-dark flex items-center justify-between">
+              {/* Calculation output summary box (Hybrid Neo-Brutalist + Soft UI Highlight) */}
+              <div className="bg-egyptian-blue text-white p-4.5 mt-6 border-2 border-egyptian-blue shadow-brutal-dark flex items-center justify-between relative overflow-hidden">
+                <div className="absolute top-0 right-0 w-24 h-24 bg-white/5 rounded-full blur-xl pointer-events-none"></div>
                 <div>
                   <span className="block text-[10px] font-bebas tracking-widest text-sunbeam-yellow uppercase">TARIFA ESTIMADA sugerida</span>
-                  <span className="font-anton text-4xl leading-none">${calculatedPrice}</span>
+                  <span className="font-anton text-4xl leading-none flex items-baseline gap-0.5">
+                    ${calculatedPrice}
+                    <span className="text-xs font-mono text-sunbeam-yellow/80 font-normal">.00</span>
+                  </span>
                 </div>
-                <div className="text-right">
+                <div className="text-right z-10">
                   <span className="block text-[10px] font-bebas tracking-widest text-sunbeam-yellow uppercase">TIEMPO ESTIMADO</span>
-                  <span className="font-bebas text-lg leading-none block mt-1">{estimatedTime}</span>
+                  <span className="font-bebas text-lg leading-none block mt-1 text-white bg-white/10 px-2 py-1 border border-white/10 rounded-md">
+                    {estimatedTime}
+                  </span>
                 </div>
               </div>
 
-              {/* Direct Link to Whatsapp */}
+              {/* Direct Link to Whatsapp - Soft UI Tactile Feel inside Brutalist borders */}
               <button 
                 type="button"
                 onClick={handleWhatsAppQuote}
-                className="w-full mt-4 bg-green-500 hover:bg-green-600 text-white font-bebas text-xl tracking-wider py-4 rounded-none border-2 border-egyptian-blue shadow-brutal transition-all flex items-center justify-center gap-3 cursor-pointer"
+                className="w-full mt-4 bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white font-bebas text-xl tracking-wider py-4 rounded-xl border-2 border-egyptian-blue shadow-[4px_4px_0px_0px_#1e3a8a] hover:shadow-none hover:translate-x-[2px] hover:translate-y-[2px] transition-all flex items-center justify-center gap-3 cursor-pointer"
               >
                 <Smartphone className="w-5 h-5 fill-white" />
-                CONFIRMAR POR WHATSAPP
+                COTIZÁ Y ENVIÁ POR WHATSAPP
               </button>
 
-              <p className="text-[10px] text-gray-500 text-center mt-2.5 font-mono">
-                *Cálculo sugerido sujeto a dimensiones de bultos y rutas vigentes.
+              <p className="text-[10px] text-gray-500 text-center mt-3 font-mono">
+                *Cálculo sugerido sujeto a dimensiones de bultos y rutas vigentes en Mar del Plata.
               </p>
 
             </div>
@@ -1028,7 +1140,7 @@ export default function Page() {
       </section>
 
       {/* 7. SECTION 5: Guía de Precios (Alternate Background - White) */}
-      <section id="tarifas" className="py-20 bg-white text-gray-900 border-b-4 border-egyptian-blue">
+      <section id="tarifas" className="py-20 bg-white text-gray-900 border-b-4 border-egyptian-blue relative z-10 shadow-[0_10px_30px_-10px_rgba(0,0,0,0.05)]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           
           <div className="text-center max-w-3xl mx-auto mb-16 space-y-4">
@@ -1195,7 +1307,7 @@ export default function Page() {
       </section>
 
       {/* 8. SECTION 6: Comunidad / Redes Sociales (Alternate Background - Blue) */}
-      <section id="comunidad" className="py-20 bg-egyptian-blue text-white border-b-4 border-sunbeam-yellow relative">
+      <section id="comunidad" className="py-20 bg-blue-100 text-egyptian-blue border-b-4 border-sunbeam-yellow border-y border-blue-200/60 relative">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           
           <div className="text-center max-w-3xl mx-auto mb-16 space-y-4">
@@ -1204,11 +1316,11 @@ export default function Page() {
               CONECTA CON NOSOTROS
             </span>
 
-            <h2 className="font-anton text-4xl md:text-6xl text-white uppercase leading-none tracking-wide">
+            <h2 className="font-anton text-4xl md:text-6xl text-egyptian-blue uppercase leading-none tracking-wide">
               SIGUE NUESTRO MOVIMIENTO
             </h2>
 
-            <p className="text-gray-200 font-inter text-md">
+            <p className="text-gray-700 font-inter text-md">
               Únete a nuestra comunidad digital y mantente al día con las últimas noticias de logística en Mar del Plata.
             </p>
 
@@ -1218,7 +1330,7 @@ export default function Page() {
                 href="https://instagram.com/enviosdosruedas" 
                 target="_blank" 
                 rel="noopener noreferrer" 
-                className="bg-white/10 hover:bg-sunbeam-yellow hover:text-egyptian-blue border border-white/20 px-4 py-1.5 transition-colors"
+                className="bg-white hover:bg-sunbeam-yellow hover:text-egyptian-blue border border-egyptian-blue/30 px-4 py-1.5 transition-colors text-egyptian-blue"
               >
                 Instagram: Novedades diarias
               </a>
@@ -1226,7 +1338,7 @@ export default function Page() {
                 href="https://facebook.com/enviosdosruedas" 
                 target="_blank" 
                 rel="noopener noreferrer" 
-                className="bg-white/10 hover:bg-sunbeam-yellow hover:text-egyptian-blue border border-white/20 px-4 py-1.5 transition-colors"
+                className="bg-white hover:bg-sunbeam-yellow hover:text-egyptian-blue border border-egyptian-blue/30 px-4 py-1.5 transition-colors text-egyptian-blue"
               >
                 Facebook: Comunidad activa
               </a>
@@ -1234,7 +1346,7 @@ export default function Page() {
                 href="https://wa.me/5492236602699?text=Hola%2C%20me%20gustar%C3%ADa%20obtener%20informaci%C3%B3n%20sobre%20sus%20servicios%20de%20env%C3%ADo."
                 target="_blank"
                 rel="noopener noreferrer"
-                className="bg-green-500 hover:bg-white hover:text-egyptian-blue border border-white/20 px-4 py-1.5 transition-colors"
+                className="bg-green-500 hover:bg-green-600 text-white px-4 py-1.5 transition-colors"
               >
                 WhatsApp: Atención inmediata
               </a>
