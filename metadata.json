@@ -1,0 +1,6 @@
+{
+  "name": "Envíos DosRuedas",
+  "description": "Distribución y mensajería ultrarrápida en el día dentro de Mar del Plata. El socio estratégico ideal para tiendas online, pymes y MercadoLibre Flex.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

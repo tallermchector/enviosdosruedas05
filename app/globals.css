@@ -1,0 +1,23 @@
+@import "tailwindcss";
+
+@theme {
+  --color-egyptian-blue: #0636A5;
+  --color-sunbeam-yellow: #FFEC01;
+  --font-anton: var(--font-anton), sans-serif;
+  --font-bebas: var(--font-bebas), sans-serif;
+  --font-inter: var(--font-inter), sans-serif;
+  
+  --shadow-brutal: 4px 4px 0px 0px #0636A5;
+  --shadow-brutal-yellow: 4px 4px 0px 0px #FFEC01;
+  --shadow-brutal-dark: 4px 4px 0px 0px #111827;
+  --shadow-brutal-lg: 8px 8px 0px 0px #111827;
+}
+
+@layer utilities {
+  .grid-pattern {
+    background-image: linear-gradient(to right, rgba(6, 54, 165, 0.08) 1px, transparent 1px),
+                      linear-gradient(to bottom, rgba(6, 54, 165, 0.08) 1px, transparent 1px);
+    background-size: 24px 24px;
+  }
+}
+
