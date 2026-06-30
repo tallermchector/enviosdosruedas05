@@ -275,7 +275,7 @@ export default function Page() {
       </header>
 
       {/* 2. HERO SECTION (Blue Background Design with Background Image Overlay) */}
-      <section id="hero" className="relative py-16 md:py-28 bg-blue-100 text-egyptian-blue overflow-hidden border-b-4 border-sunbeam-yellow border-y border-blue-200/60">
+      <section id="hero" className="relative py-16 md:py-28 bg-egyptian-blue text-white overflow-hidden border-b-4 border-sunbeam-yellow border-y border-blue-200/60">
         
         {/* Absolute Background image with low opacity for clear readability */}
         <div className="absolute inset-0 z-0 pointer-events-none opacity-20">
@@ -302,14 +302,14 @@ export default function Page() {
                 Tu Solución Confiable
               </div>
 
-              <h1 className="font-anton text-5xl md:text-7xl lg:text-8xl text-egyptian-blue uppercase leading-none tracking-tight">
+              <h1 className="font-anton text-5xl md:text-7xl lg:text-8xl text-white uppercase leading-none tracking-tight">
                 Conectá tu negocio <br />
                 <span className="bg-sunbeam-yellow text-egyptian-blue px-3 inline-block transform rotate-1 border-4 border-white shadow-brutal-dark">
                   con toda la ciudad
                 </span>
               </h1>
 
-              <p className="text-xl text-gray-800 font-inter max-w-2xl leading-relaxed">
+              <p className="text-xl text-blue-50/90 font-inter max-w-2xl leading-relaxed">
                 Logística humana y eficiente para Mar del Plata. Poné tus ventas en las mejores manos: conectamos tu negocio con entregas rápidas y seguras. Clientes felices siempre.
               </p>
 
@@ -332,14 +332,14 @@ export default function Page() {
 
               {/* Pillars Floating Badges */}
               <div className="grid grid-cols-3 gap-4 pt-6 max-w-xl">
-                <div className="bg-white border-2 border-egyptian-blue p-3 text-center shadow-brutal">
-                  <span className="font-bebas text-sm text-egyptian-blue block tracking-widest">100% SEGURO</span>
+                <div className="bg-white/10 backdrop-blur-md border border-white/20 p-3 text-center">
+                  <span className="font-bebas text-sm text-sunbeam-yellow block tracking-widest">100% SEGURO</span>
                 </div>
-                <div className="bg-white border-2 border-egyptian-blue p-3 text-center shadow-brutal">
-                  <span className="font-bebas text-sm text-egyptian-blue block tracking-widest">ULTRA RÁPIDO</span>
+                <div className="bg-white/10 backdrop-blur-md border border-white/20 p-3 text-center">
+                  <span className="font-bebas text-sm text-sunbeam-yellow block tracking-widest">ULTRA RÁPIDO</span>
                 </div>
-                <div className="bg-white border-2 border-egyptian-blue p-3 text-center shadow-brutal">
-                  <span className="font-bebas text-sm text-egyptian-blue block tracking-widest">COBERTURA TOTAL</span>
+                <div className="bg-white/10 backdrop-blur-md border border-white/20 p-3 text-center">
+                  <span className="font-bebas text-sm text-sunbeam-yellow block tracking-widest">COBERTURA TOTAL</span>
                 </div>
               </div>
 
@@ -391,7 +391,7 @@ export default function Page() {
               {/* Explore action anchor */}
               <a 
                 href="#nosotros" 
-                className="mt-6 font-bebas text-lg text-egyptian-blue hover:text-egyptian-blue/80 transition-colors flex items-center gap-2 animate-bounce uppercase tracking-widest"
+                className="mt-6 font-bebas text-lg text-sunbeam-yellow hover:text-white transition-colors flex items-center gap-2 animate-bounce uppercase tracking-widest"
               >
                 Explore <ArrowRight className="w-4 h-4 rotate-90" />
               </a>
@@ -503,7 +503,7 @@ export default function Page() {
       </section>
 
       {/* 4. SECTION 2: ¡Empezá Ahora! (Alternate Background - Blue) */}
-      <section className="relative py-20 bg-blue-100 text-egyptian-blue border-b-4 border-sunbeam-yellow border-y border-blue-200/60 overflow-hidden">
+      <section className="relative py-20 bg-egyptian-blue text-white border-b-4 border-sunbeam-yellow border-y border-blue-200/60 overflow-hidden">
         
         {/* Background Image with Overlay */}
         <div className="absolute inset-0 z-0 pointer-events-none opacity-15">
@@ -522,11 +522,11 @@ export default function Page() {
             <span className="font-bebas text-lg bg-sunbeam-yellow text-egyptian-blue border border-egyptian-blue px-4 py-1.5 tracking-wider uppercase inline-block transform -rotate-1 shadow-brutal-dark">
               ¡Empezá Ahora!
             </span>
-            <h2 className="font-anton text-4xl md:text-6xl text-egyptian-blue uppercase leading-none tracking-tight">
+            <h2 className="font-anton text-4xl md:text-6xl text-white uppercase leading-none tracking-tight">
               ¿Listo para escalar la <br className="hidden md:inline" />
               logística de tu E-Commerce?
             </h2>
-            <p className="text-lg text-gray-800 max-w-2xl mx-auto font-inter">
+            <p className="text-lg text-blue-50/90 max-w-2xl mx-auto font-inter">
               Olvidate de la gestión de paquetes and enfocate en vender más. Dejá la distribución urbana en manos de expertos.
             </p>
           </div>
@@ -550,7 +550,7 @@ export default function Page() {
             </a>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 max-w-4xl mx-auto pt-8 border-t border-egyptian-blue/20">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 max-w-4xl mx-auto pt-8 border-t border-white/20">
             <div className="p-4 bg-white border-2 border-egyptian-blue shadow-brutal rounded-none">
               <span className="font-bebas text-lg tracking-widest text-egyptian-blue block uppercase">Confianza local comprobada</span>
             </div>
@@ -735,7 +735,7 @@ export default function Page() {
       </section>
 
       {/* 6. SECTION 4: Nuestros Servicios & Cotizador Interactivo (Alternate Background - Blue) */}
-      <section id="servicios" className="py-20 bg-blue-100 text-egyptian-blue border-b-4 border-sunbeam-yellow border-y border-blue-200/60 relative">
+      <section id="servicios" className="py-20 bg-egyptian-blue text-white border-b-4 border-sunbeam-yellow border-y border-blue-200/60 relative">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
@@ -750,13 +750,13 @@ export default function Page() {
                 <span className="font-bebas text-sm bg-white text-egyptian-blue px-3.5 py-1.5 ml-2 tracking-wider uppercase inline-block">
                   Nuestros Servicios
                 </span>
-                <h2 className="font-anton text-4xl md:text-6xl text-egyptian-blue uppercase leading-none tracking-wide">
+                <h2 className="font-anton text-4xl md:text-6xl text-white uppercase leading-none tracking-wide">
                   SOLUCIONES A MEDIDA
                 </h2>
-                <h3 className="font-bebas text-2xl text-egyptian-blue/95 tracking-widest uppercase">
+                <h3 className="font-bebas text-2xl text-sunbeam-yellow tracking-widest uppercase">
                   Elegí tu plan de entregas
                 </h3>
-                <p className="text-gray-700 font-inter text-md max-w-2xl">
+                <p className="text-blue-50/90 font-inter text-md max-w-2xl">
                   Hemos redefinido los estándares de la logística urbana para ofrecerte una ventaja competitiva real en un mercado en constante evolución. Inteligencia aplicada a cada kilómetro para negocios que no se detienen.
                 </p>
               </div>
@@ -872,8 +872,8 @@ export default function Page() {
 
               {/* Banner indicators footer in section */}
               <div className="space-y-2 pt-4">
-                <div className="h-1 bg-egyptian-blue w-36"></div>
-                <div className="flex gap-4 font-bebas text-sm text-egyptian-blue tracking-widest uppercase flex-wrap">
+                <div className="h-1 bg-sunbeam-yellow w-36"></div>
+                <div className="flex gap-4 font-bebas text-sm text-sunbeam-yellow tracking-widest uppercase flex-wrap">
                   <span>MÁXIMO PODER</span>
                   <span>&bull;</span>
                   <span>INFRAESTRUCTURA TOTAL</span>
@@ -1307,7 +1307,7 @@ export default function Page() {
       </section>
 
       {/* 8. SECTION 6: Comunidad / Redes Sociales (Alternate Background - Blue) */}
-      <section id="comunidad" className="py-20 bg-blue-100 text-egyptian-blue border-b-4 border-sunbeam-yellow border-y border-blue-200/60 relative">
+      <section id="comunidad" className="py-20 bg-egyptian-blue text-white border-b-4 border-sunbeam-yellow border-y border-blue-200/60 relative">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           
           <div className="text-center max-w-3xl mx-auto mb-16 space-y-4">
@@ -1316,11 +1316,11 @@ export default function Page() {
               CONECTA CON NOSOTROS
             </span>
 
-            <h2 className="font-anton text-4xl md:text-6xl text-egyptian-blue uppercase leading-none tracking-wide">
+            <h2 className="font-anton text-4xl md:text-6xl text-white uppercase leading-none tracking-wide">
               SIGUE NUESTRO MOVIMIENTO
             </h2>
 
-            <p className="text-gray-700 font-inter text-md">
+            <p className="text-blue-50/90 font-inter text-md">
               Únete a nuestra comunidad digital y mantente al día con las últimas noticias de logística en Mar del Plata.
             </p>
 
@@ -1330,7 +1330,7 @@ export default function Page() {
                 href="https://instagram.com/enviosdosruedas" 
                 target="_blank" 
                 rel="noopener noreferrer" 
-                className="bg-white hover:bg-sunbeam-yellow hover:text-egyptian-blue border border-egyptian-blue/30 px-4 py-1.5 transition-colors text-egyptian-blue"
+                className="bg-white/10 hover:bg-sunbeam-yellow hover:text-egyptian-blue border border-white/20 px-4 py-1.5 transition-colors text-white"
               >
                 Instagram: Novedades diarias
               </a>
@@ -1338,7 +1338,7 @@ export default function Page() {
                 href="https://facebook.com/enviosdosruedas" 
                 target="_blank" 
                 rel="noopener noreferrer" 
-                className="bg-white hover:bg-sunbeam-yellow hover:text-egyptian-blue border border-egyptian-blue/30 px-4 py-1.5 transition-colors text-egyptian-blue"
+                className="bg-white/10 hover:bg-sunbeam-yellow hover:text-egyptian-blue border border-white/20 px-4 py-1.5 transition-colors text-white"
               >
                 Facebook: Comunidad activa
               </a>
@@ -1346,7 +1346,7 @@ export default function Page() {
                 href="https://wa.me/5492236602699?text=Hola%2C%20me%20gustar%C3%ADa%20obtener%20informaci%C3%B3n%20sobre%20sus%20servicios%20de%20env%C3%ADo."
                 target="_blank"
                 rel="noopener noreferrer"
-                className="bg-green-500 hover:bg-green-600 text-white px-4 py-1.5 transition-colors"
+                className="bg-green-500 hover:bg-white hover:text-egyptian-blue border border-white/20 px-4 py-1.5 transition-colors text-white"
               >
                 WhatsApp: Atención inmediata
               </a>
